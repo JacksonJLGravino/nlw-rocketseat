@@ -3,86 +3,868 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ClipMaker</title>
+    <meta
+      name="description"
+      content="Encontre os melhores momentos do seu vídeo e transforme-os em cortes prontos para compartilhar com a ajuda da inteligência artificial."
+    />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>ClipMaker — seus melhores momentos, em segundos</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "Inter",
+                "ui-sans-serif",
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              ink: "#0f172a",
+              brand: {
+                50: "#eef2ff",
+                100: "#e0e7ff",
+                500: "#6366f1",
+                600: "#4f46e5",
+                700: "#4338ca",
+              },
+            },
+            boxShadow: {
+              card: "0 18px 60px -28px rgba(51, 65, 105, 0.22)",
+              glow: "0 16px 40px -18px rgba(79, 70, 229, 0.48)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      h1,
+      h2,
+      h3,
+      .font-display {
+        font-family: "Manrope", sans-serif;
+      }
+
+      .hero-orb {
+        background: radial-gradient(
+          circle,
+          rgba(129, 140, 248, 0.18) 0%,
+          rgba(224, 231, 255, 0.12) 42%,
+          transparent 72%
+        );
+      }
+
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.78);
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+      }
+
+      .shimmer {
+        background: linear-gradient(
+          105deg,
+          transparent 25%,
+          rgba(255, 255, 255, 0.72) 50%,
+          transparent 75%
+        );
+        background-size: 220% 100%;
+        animation: shimmer 2.8s ease-in-out infinite;
+      }
+
+      @keyframes shimmer {
+        from {
+          background-position: 120% 0;
+        }
+        to {
+          background-position: -120% 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <h1>ClipMaker</h1>
-    <button id="upload_widget" class="cloudinary-button">Upload files</button>
+  <body class="overflow-x-hidden bg-slate-50 text-slate-900">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+    >
+      <div
+        class="hero-orb absolute -left-64 -top-72 h-[44rem] w-[44rem] rounded-full blur-3xl"
+      ></div>
+      <div
+        class="hero-orb absolute -right-72 top-[28rem] h-[48rem] w-[48rem] rounded-full blur-3xl"
+      ></div>
+      <div
+        class="absolute inset-0 opacity-[0.18]"
+        style="
+          background-image: radial-gradient(#94a3b8 0.7px, transparent 0.7px);
+          background-size: 24px 24px;
+        "
+      ></div>
+    </div>
 
-    <script
-      src="https://upload-widget.cloudinary.com/latest/global/all.js"
-      type="text/javascript"
-    ></script>
+    <header
+      class="glass-nav fixed inset-x-0 top-0 z-40 border-b border-white/70"
+    >
+      <nav
+        aria-label="Navegação principal"
+        class="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12"
+      >
+        <a
+          href="#"
+          class="group flex items-center gap-3"
+          aria-label="ClipMaker, início"
+        >
+          <span
+            class="flex h-10 w-10 items-center justify-center rounded-[14px] bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-lg shadow-indigo-200/70 transition duration-300 group-hover:scale-[1.04]"
+          >
+            <i data-lucide="scissors" class="h-[19px] w-[19px]"></i>
+          </span>
+          <span
+            class="font-display text-lg font-extrabold tracking-tight text-slate-900"
+          >
+            clipmaker<span class="text-brand-600">.</span>
+          </span>
+        </a>
 
-    <script type="text/javascript">
+        <a
+          href="#como-funciona"
+          class="hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition duration-300 hover:bg-white/80 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100 sm:inline-flex"
+        >
+          Como funciona
+          <i data-lucide="arrow-down-right" class="h-4 w-4"></i>
+        </a>
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50/80 px-3 py-1.5 text-xs font-semibold text-emerald-700"
+        >
+          <span class="relative flex h-2 w-2">
+            <span
+              class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50"
+            ></span>
+            <span
+              class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"
+            ></span>
+          </span>
+          IA pronta para criar
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        class="relative px-5 pb-24 pt-36 sm:px-8 sm:pb-28 sm:pt-40 lg:px-12 lg:pb-32 lg:pt-44"
+      >
+        <div class="mx-auto max-w-7xl">
+          <div class="mx-auto max-w-4xl text-center">
+            <div
+              class="hero-item mb-7 inline-flex items-center gap-2 rounded-full border border-indigo-100/90 bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-brand-700 shadow-sm shadow-indigo-100/60 sm:text-sm"
+            >
+              <i data-lucide="sparkles" class="h-4 w-4"></i>
+              Seu próximo corte começa aqui
+            </div>
+            <h1
+              class="hero-item font-display text-[2.65rem] font-extrabold leading-[1.08] tracking-[-0.055em] text-slate-900 sm:text-6xl lg:text-[4.5rem]"
+            >
+              Os melhores momentos.
+              <span
+                class="bg-gradient-to-r from-brand-600 via-indigo-500 to-violet-500 bg-clip-text text-transparent"
+              >
+                Sem horas de edição.
+              </span>
+            </h1>
+            <p
+              class="hero-item mx-auto mt-6 max-w-2xl text-base leading-7 text-slate-500 sm:mt-7 sm:text-lg sm:leading-8"
+            >
+              Envie seu vídeo. A inteligência artificial encontra o trecho mais
+              interessante e cria um corte pronto para compartilhar.
+            </p>
+          </div>
+
+          <div
+            class="mx-auto mt-12 grid max-w-6xl items-start gap-7 lg:mt-16 lg:grid-cols-[0.82fr_1.18fr] lg:gap-8"
+          >
+            <section
+              aria-labelledby="upload-heading"
+              class="hero-item rounded-[28px] border border-white bg-white/85 p-6 shadow-card ring-1 ring-slate-200/60 backdrop-blur-sm sm:p-8"
+            >
+              <div class="mb-7 flex items-start justify-between gap-4">
+                <div>
+                  <p
+                    class="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-brand-600"
+                  >
+                    Vamos começar
+                  </p>
+                  <h2
+                    id="upload-heading"
+                    class="font-display text-2xl font-bold tracking-tight text-slate-900"
+                  >
+                    Prepare seu vídeo
+                  </h2>
+                  <p class="mt-2 text-sm leading-6 text-slate-500">
+                    Só precisamos da sua chave Gemini para começar.
+                  </p>
+                </div>
+                <span
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-brand-600"
+                >
+                  <i data-lucide="wand-sparkles" class="h-5 w-5"></i>
+                </span>
+              </div>
+
+              <label
+                for="api-key"
+                class="mb-2 block text-sm font-semibold text-slate-700"
+              >
+                Gemini API key
+              </label>
+              <div class="group relative">
+                <div
+                  class="pointer-events-none absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-indigo-200 to-violet-200 opacity-0 blur transition duration-300 group-focus-within:opacity-70"
+                ></div>
+                <div
+                  class="relative flex items-center rounded-2xl border border-slate-200 bg-white transition duration-300 group-focus-within:border-brand-300 group-focus-within:ring-4 group-focus-within:ring-brand-50"
+                >
+                  <i
+                    data-lucide="key-round"
+                    class="ml-4 h-[18px] w-[18px] shrink-0 text-slate-400"
+                  ></i>
+                  <input
+                    id="api-key"
+                    type="password"
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-describedby="api-key-help"
+                    class="min-w-0 flex-1 bg-transparent px-3 py-4 text-sm text-slate-800 outline-none placeholder:text-slate-400"
+                    placeholder="Cole sua chave API do Gemini"
+                  />
+                  <button
+                    id="toggle-key"
+                    type="button"
+                    aria-label="Mostrar chave da API"
+                    aria-pressed="false"
+                    class="mr-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-slate-400 transition duration-300 hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100"
+                  >
+                    <i data-lucide="eye" class="h-[18px] w-[18px]"></i>
+                  </button>
+                </div>
+              </div>
+              <p
+                id="api-key-help"
+                class="mt-2 text-xs leading-5 text-slate-400"
+              >
+                Sua chave é usada apenas nesta sessão e não fica armazenada.
+              </p>
+
+              <button
+                id="upload-widget"
+                type="button"
+                class="group mt-6 inline-flex min-h-[58px] w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 px-6 py-4 font-bold text-white shadow-glow transition duration-300 hover:scale-[1.02] hover:from-brand-700 hover:to-indigo-700 hover:shadow-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-200 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
+              >
+                <i
+                  data-lucide="upload-cloud"
+                  class="h-5 w-5 transition duration-300 group-hover:-translate-y-0.5"
+                ></i>
+                <span id="upload-button-label">Enviar meu vídeo</span>
+                <i
+                  data-lucide="arrow-right"
+                  class="h-4 w-4 transition duration-300 group-hover:translate-x-1"
+                ></i>
+              </button>
+
+              <div
+                id="loading"
+                role="status"
+                aria-live="polite"
+                class="mt-5 hidden items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/80 px-4 py-3.5 text-sm font-semibold text-indigo-700"
+              >
+                <span class="relative flex h-2.5 w-2.5 shrink-0">
+                  <span
+                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-60"
+                  ></span>
+                  <span
+                    class="relative inline-flex h-2.5 w-2.5 rounded-full bg-indigo-500"
+                  ></span>
+                </span>
+                <span id="loading-text">Preparando seu vídeo...</span>
+              </div>
+
+              <div
+                id="error"
+                role="alert"
+                aria-live="assertive"
+                class="mt-5 hidden items-start gap-2.5 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3.5 text-sm font-medium leading-5 text-rose-700"
+              >
+                <i
+                  data-lucide="circle-alert"
+                  class="mt-0.5 h-4 w-4 shrink-0"
+                ></i>
+                <span id="error-message"
+                  >Não foi possível processar o vídeo.</span
+                >
+              </div>
+
+              <div class="my-7 h-px bg-slate-100"></div>
+              <div
+                class="flex flex-wrap items-center justify-between gap-3 text-xs font-medium text-slate-400"
+              >
+                <span class="inline-flex items-center gap-1.5">
+                  <i
+                    data-lucide="shield-check"
+                    class="h-4 w-4 text-emerald-500"
+                  ></i>
+                  Upload seguro via Cloudinary
+                </span>
+                <span>MP4, MOV e mais</span>
+              </div>
+            </section>
+
+            <section aria-label="Prévia do seu corte" class="hero-item">
+              <div class="mb-4 flex items-center justify-between px-1">
+                <div>
+                  <p class="text-sm font-bold text-slate-800">
+                    Seu próximo viral
+                  </p>
+                  <p class="mt-1 text-xs text-slate-400">
+                    Prévia do corte gerado pela IA
+                  </p>
+                </div>
+                <span
+                  class="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/75 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm"
+                >
+                  <i
+                    data-lucide="sparkles"
+                    class="h-3.5 w-3.5 text-brand-500"
+                  ></i>
+                  AI clip
+                </span>
+              </div>
+
+              <div
+                class="relative overflow-hidden rounded-[28px] border border-white bg-white p-2.5 shadow-card ring-1 ring-slate-200/60 sm:rounded-[32px] sm:p-3"
+              >
+                <div
+                  id="placeholder"
+                  class="relative flex aspect-video flex-col items-center justify-center overflow-hidden rounded-[20px] bg-gradient-to-br from-slate-100 via-indigo-50/70 to-violet-100/80 sm:rounded-[24px]"
+                >
+                  <div class="shimmer absolute inset-0 opacity-60"></div>
+                  <div
+                    class="absolute -right-8 -top-16 h-56 w-56 rounded-full bg-white/60 blur-3xl"
+                  ></div>
+                  <div
+                    class="absolute -bottom-24 -left-8 h-56 w-56 rounded-full bg-indigo-200/40 blur-3xl"
+                  ></div>
+                  <div
+                    class="relative mb-4 flex h-[68px] w-[68px] items-center justify-center rounded-[22px] border border-white/80 bg-white/80 text-brand-600 shadow-lg shadow-indigo-200/30 backdrop-blur-sm"
+                  >
+                    <i data-lucide="play" class="ml-1 h-7 w-7 fill-current"></i>
+                  </div>
+                  <p
+                    class="relative font-display text-base font-bold tracking-tight text-slate-700 sm:text-lg"
+                  >
+                    Seu corte aparece aqui
+                  </p>
+                  <p
+                    class="relative mt-1.5 text-xs font-medium text-slate-400 sm:text-sm"
+                  >
+                    Um vídeo. Um momento extraordinário.
+                  </p>
+                  <div
+                    class="absolute bottom-5 left-5 right-5 flex items-center gap-1.5 sm:bottom-6 sm:left-7 sm:right-7"
+                  >
+                    <span
+                      class="h-1 flex-1 rounded-full bg-brand-500/80"
+                    ></span>
+                    <span class="h-1 flex-1 rounded-full bg-white/80"></span>
+                    <span class="h-1 flex-1 rounded-full bg-white/80"></span>
+                    <span class="h-1 flex-1 rounded-full bg-white/80"></span>
+                    <span class="h-1 flex-1 rounded-full bg-white/80"></span>
+                  </div>
+                </div>
+                <video
+                  id="video"
+                  class="relative z-10 hidden aspect-video w-full rounded-[20px] bg-slate-950 object-contain sm:rounded-[24px]"
+                  controls
+                  playsinline
+                  preload="metadata"
+                  aria-label="Corte de vídeo gerado"
+                ></video>
+              </div>
+              <div class="mt-4 flex items-center justify-between px-1">
+                <span
+                  class="inline-flex items-center gap-2 text-xs font-medium text-slate-400"
+                >
+                  <i data-lucide="clock-3" class="h-4 w-4"></i>
+                  Pronto para compartilhar
+                </span>
+                <span
+                  class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500"
+                >
+                  <i
+                    data-lucide="sparkles"
+                    class="h-3.5 w-3.5 text-amber-400"
+                  ></i>
+                  Feito com IA
+                </span>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="como-funciona"
+        class="border-y border-slate-200/70 bg-white/65 px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-28"
+      >
+        <div class="mx-auto max-w-7xl">
+          <div class="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+            <p
+              class="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-brand-600"
+            >
+              Simples assim
+            </p>
+            <h2
+              class="font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl"
+            >
+              Do vídeo ao destaque em 3 passos.
+            </h2>
+            <p class="mt-4 text-base leading-7 text-slate-500">
+              Menos tempo procurando. Mais tempo criando.
+            </p>
+          </div>
+
+          <div class="grid gap-5 md:grid-cols-3">
+            <article
+              class="feature-card group rounded-[24px] border border-slate-200/70 bg-white p-6 shadow-sm transition duration-300 hover:scale-[1.02] hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-100/40 sm:p-7"
+            >
+              <span
+                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-sky-600 transition duration-300 group-hover:scale-105"
+              >
+                <i data-lucide="cloud-upload" class="h-5 w-5"></i>
+              </span>
+              <p
+                class="mt-6 text-xs font-bold uppercase tracking-[0.15em] text-slate-400"
+              >
+                01 / Envie
+              </p>
+              <h3
+                class="mt-2 font-display text-xl font-bold tracking-tight text-slate-900"
+              >
+                Escolha seu vídeo
+              </h3>
+              <p class="mt-3 text-sm leading-6 text-slate-500">
+                Faça upload do arquivo que você quer transformar em conteúdo.
+              </p>
+            </article>
+
+            <article
+              class="feature-card group rounded-[24px] border border-indigo-100/80 bg-gradient-to-br from-white to-indigo-50/55 p-6 shadow-sm transition duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-indigo-100/50 sm:p-7"
+            >
+              <span
+                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100/80 text-brand-600 transition duration-300 group-hover:scale-105"
+              >
+                <i data-lucide="scan-search" class="h-5 w-5"></i>
+              </span>
+              <p
+                class="mt-6 text-xs font-bold uppercase tracking-[0.15em] text-brand-500"
+              >
+                02 / Descubra
+              </p>
+              <h3
+                class="mt-2 font-display text-xl font-bold tracking-tight text-slate-900"
+              >
+                A IA encontra o momento
+              </h3>
+              <p class="mt-3 text-sm leading-6 text-slate-500">
+                A transcrição ajuda a identificar o trecho mais envolvente do
+                vídeo.
+              </p>
+            </article>
+
+            <article
+              class="feature-card group rounded-[24px] border border-slate-200/70 bg-white p-6 shadow-sm transition duration-300 hover:scale-[1.02] hover:border-violet-100 hover:shadow-xl hover:shadow-violet-100/40 sm:p-7"
+            >
+              <span
+                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-50 text-violet-600 transition duration-300 group-hover:scale-105"
+              >
+                <i data-lucide="clapperboard" class="h-5 w-5"></i>
+              </span>
+              <p
+                class="mt-6 text-xs font-bold uppercase tracking-[0.15em] text-slate-400"
+              >
+                03 / Compartilhe
+              </p>
+              <h3
+                class="mt-2 font-display text-xl font-bold tracking-tight text-slate-900"
+              >
+                Seu corte fica pronto
+              </h3>
+              <p class="mt-3 text-sm leading-6 text-slate-500">
+                Assista ao resultado e compartilhe o trecho que merece ser
+                visto.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="px-5 py-8 sm:px-8 lg:px-12">
+      <div
+        class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row"
+      >
+        <a
+          href="#"
+          class="flex items-center gap-2 text-sm font-bold tracking-tight text-slate-700"
+        >
+          <span
+            class="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600 text-white"
+          >
+            <i data-lucide="scissors" class="h-3.5 w-3.5"></i>
+          </span>
+          clipmaker<span class="-ml-2 text-brand-600">.</span>
+        </a>
+        <p class="text-center text-xs text-slate-400">
+          Menos edição. Mais criação.
+        </p>
+        <p class="text-xs font-medium text-slate-400">
+          Feito para contar boas histórias.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+    <script>
+      lucide.createIcons();
+
+      const elements = {
+        apiKey: document.getElementById("api-key"),
+        toggleKey: document.getElementById("toggle-key"),
+        uploadButton: document.getElementById("upload-widget"),
+        uploadButtonLabel: document.getElementById("upload-button-label"),
+        loading: document.getElementById("loading"),
+        loadingText: document.getElementById("loading-text"),
+        error: document.getElementById("error"),
+        errorMessage: document.getElementById("error-message"),
+        video: document.getElementById("video"),
+        placeholder: document.getElementById("placeholder"),
+      };
+
       const app = {
-        transcriptionURL: "",
-        public_id: "",
-        waitForTranscription: async () => {
-          const maxAttempts = 30;
-          const delay = 2000;
+        cloudName: "dhgdmbhtj",
+        uploadPreset: "upload_video",
+        publicId: "",
 
-          for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-            const url = `https://res.cloudinary.com/${config.cloudName}/raw/upload/v${Date.now()}/${app.public_id}.transcript`;
+        async waitForTranscription() {
+          const maxAttempts = 30;
+          let lastNetworkError = null;
+
+          for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+            const url = new URL(
+              `https://res.cloudinary.com/${this.cloudName}/raw/upload/${this.publicId}.transcript`,
+            );
+            url.searchParams.set("check", String(Date.now()));
 
             try {
-              console.log(
-                `Tentativa ${attempt}/${maxAttempts}: Verificando transcrição...`,
-              );
-              const response = await fetch(url);
-
-              if (response.ok) {
-                app.transcriptionURL = url;
-                console.log("Transcrição encontrada!", url);
-                return true;
-              }
+              const response = await fetch(url, { cache: "no-store" });
+              if (response.ok) return url.toString();
             } catch (error) {
-              console.log(`Tentativa ${attempt} falhou:`, error.message);
+              lastNetworkError = error;
             }
 
-            // Aguarda antes da próxima tentativa (exceto a última)
-            if (attempt < maxAttempts) {
-              await new Promise((resolve) => setTimeout(resolve, delay));
+            if (attempt < maxAttempts - 1) {
+              await new Promise((resolve) => window.setTimeout(resolve, 2000));
             }
           }
 
-          console.log("Transcrição não encontrada após todas as tentativas.");
-          return false;
+          if (lastNetworkError) {
+            throw new Error(
+              "Não foi possível verificar a transcrição. Confira sua conexão e tente novamente.",
+            );
+          }
+          throw new Error(
+            "A transcrição demorou mais do que o esperado. Tente novamente.",
+          );
         },
-        getTranscription: async () => {
-          const response = await fetch(app.transcriptionURL);
-          return response.text();
+
+        async getViralMoment(transcriptionUrl) {
+          const apiKey = elements.apiKey.value.trim();
+          const transcriptionResponse = await fetch(transcriptionUrl);
+          if (!transcriptionResponse.ok) {
+            throw new Error(
+              "Não foi possível carregar a transcrição do vídeo.",
+            );
+          }
+          const transcription = await transcriptionResponse.text();
+          if (!transcription.trim()) {
+            throw new Error(
+              "A transcrição do vídeo está vazia. Tente enviar outro arquivo.",
+            );
+          }
+
+          const prompt = `Role: You are a professional video editor specializing in viral content.
+Task: Analyze the transcription below and identify the most engaging, funny, or surprising segment.
+Constraints:
+1. Duration: Minimum 30 seconds, Maximum 60 seconds.
+2. Format: Return ONLY the start and end string for Cloudinary. Format: so_<start_seconds>,eo_<end_seconds>
+3. Example: so_12.5,eo_45.2
+4. Do not use markdown, quotes, or explanations. Return only the raw string.
+
+Transcription:
+${transcription}`;
+
+          const response = await fetch(
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-goog-api-key": apiKey,
+              },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { temperature: 0.2 },
+              }),
+            },
+          );
+
+          const data = await response.json();
+          if (!response.ok) {
+            const message = data.error?.message || "A análise do vídeo falhou.";
+            throw new Error(message);
+          }
+
+          const rawText = data.candidates?.[0]?.content?.parts
+            ?.map((part) => part.text || "")
+            .join("")
+            .trim();
+          const moment = rawText?.match(
+            /so_(\d+(?:\.\d+)?),\s*eo_(\d+(?:\.\d+)?)/i,
+          );
+          if (!moment) {
+            throw new Error(
+              "A IA não conseguiu identificar um trecho válido. Tente novamente.",
+            );
+          }
+
+          const start = Number(moment[1]);
+          const end = Number(moment[2]);
+          const duration = end - start;
+          if (
+            !Number.isFinite(start) ||
+            !Number.isFinite(end) ||
+            start < 0 ||
+            duration < 30 ||
+            duration > 60
+          ) {
+            throw new Error(
+              "A IA retornou um trecho fora da duração permitida. Tente novamente.",
+            );
+          }
+
+          return `so_${moment[1]},eo_${moment[2]}`;
         },
-        getViralMoment: async () => {
-          const transcription = await app.getTranscription();
+
+        showError(message) {
+          elements.errorMessage.textContent = message;
+          elements.error.classList.remove("hidden");
+          elements.error.classList.add("flex");
+        },
+
+        async processVideo(publicId) {
+          this.publicId = publicId;
+          elements.error.classList.add("hidden");
+          elements.error.classList.remove("flex");
+          elements.loading.classList.remove("hidden");
+          elements.loading.classList.add("flex");
+          elements.uploadButton.disabled = true;
+          elements.uploadButtonLabel.textContent = "Processando vídeo...";
+          elements.loadingText.textContent = "Aguardando a transcrição...";
+
+          try {
+            const transcriptionUrl = await this.waitForTranscription();
+            elements.loadingText.textContent =
+              "Encontrando seu melhor momento...";
+            const viralMoment = await this.getViralMoment(transcriptionUrl);
+            const videoUrl = new URL(
+              `https://res.cloudinary.com/${this.cloudName}/video/upload/${viralMoment}/${publicId}.mp4`,
+            );
+
+            elements.video.pause();
+            elements.video.src = videoUrl.toString();
+            elements.video.classList.remove("hidden");
+            elements.placeholder.classList.add("hidden");
+            elements.video.load();
+
+            if (window.gsap) {
+              gsap.fromTo(
+                elements.video,
+                { opacity: 0, scale: 0.985, filter: "blur(8px)" },
+                {
+                  opacity: 1,
+                  scale: 1,
+                  filter: "blur(0px)",
+                  duration: 0.7,
+                  ease: "power2.out",
+                },
+              );
+            }
+          } catch (error) {
+            this.showError(
+              error instanceof Error
+                ? error.message
+                : "Ocorreu um erro inesperado ao processar seu vídeo.",
+            );
+          } finally {
+            elements.loading.classList.add("hidden");
+            elements.loading.classList.remove("flex");
+            elements.uploadButton.disabled = false;
+            elements.uploadButtonLabel.textContent = "Enviar meu vídeo";
+          }
         },
       };
 
-      const config = {
-        cloudName: "jlxzspoq",
-        uploadPreset: "upload_nlw",
-      };
+      elements.toggleKey.addEventListener("click", () => {
+        const isVisible = elements.apiKey.type === "text";
+        elements.apiKey.type = isVisible ? "password" : "text";
+        elements.toggleKey.setAttribute("aria-pressed", String(!isVisible));
+        elements.toggleKey.setAttribute(
+          "aria-label",
+          isVisible ? "Mostrar chave da API" : "Ocultar chave da API",
+        );
+        elements.toggleKey.innerHTML = `<i data-lucide="${isVisible ? "eye" : "eye-off"}" class="h-[18px] w-[18px]"></i>`;
+        lucide.createIcons({ nodes: [elements.toggleKey] });
+      });
 
-      const myWidget = cloudinary.createUploadWidget(
-        config,
-        async (error, result) => {
-          console.log("error", error);
-          if (!error && result && result.event === "success") {
-            console.log("Done! Here is the image info: ", result.info);
-            app.public_id = result.info.public_id;
-
-            const isReady = await app.waitForTranscription();
+      const uploadWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: app.cloudName,
+          uploadPreset: app.uploadPreset,
+          multiple: false,
+          maxFileSize: 200000000,
+          clientAllowedFormats: ["mp4", "mov", "webm", "m4v"],
+          theme: "minimal",
+          styles: {
+            palette: {
+              window: "#FFFFFF",
+              windowBorder: "#E2E8F0",
+              tabIcon: "#4F46E5",
+              menuIcons: "#64748B",
+              textDark: "#0F172A",
+              textLight: "#FFFFFF",
+              link: "#4F46E5",
+              action: "#4F46E5",
+              inactiveTabIcon: "#64748B",
+              error: "#E11D48",
+              inProgress: "#4F46E5",
+              complete: "#059669",
+              sourceBg: "#F8FAFC",
+            },
+          },
+        },
+        (error, result) => {
+          if (error) {
+            app.showError(
+              error.message || "O upload do vídeo falhou. Tente novamente.",
+            );
+            return;
+          }
+          if (result?.event === "success" && result.info?.public_id) {
+            app.processVideo(result.info.public_id);
           }
         },
       );
 
-      document.getElementById("upload_widget").addEventListener(
-        "click",
-        function () {
-          myWidget.open();
-        },
-        false,
-      );
+      elements.uploadButton.addEventListener("click", () => {
+        if (!elements.apiKey.value.trim()) {
+          app.showError(
+            "Insira sua chave da Gemini API antes de enviar um vídeo.",
+          );
+          elements.apiKey.focus();
+          return;
+        }
+        elements.error.classList.add("hidden");
+        elements.error.classList.remove("flex");
+        uploadWidget.open();
+      });
+
+      if (
+        window.gsap &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        gsap.fromTo(
+          ".hero-item",
+          { opacity: 0, y: 22 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            delay: 0.12,
+          },
+        );
+        if (window.ScrollTrigger) {
+          gsap.registerPlugin(ScrollTrigger);
+          gsap.utils.toArray(".feature-card").forEach((card, index) => {
+            gsap.fromTo(
+              card,
+              { opacity: 0, y: 18 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.65,
+                delay: index * 0.08,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 88%",
+                  once: true,
+                },
+              },
+            );
+          });
+        }
+      }
     </script>
   </body>
 </html>
